@@ -1,7 +1,6 @@
 # =============================
 # Global OS / Editor junk
-# =============================
-.DS_Store
+# =.DS_Store
 Thumbs.db
 ehthumbs.db
 *.swp
@@ -66,7 +65,7 @@ out/
 .storybook-out/
 coverage/
 .cypress/
-.playwright/
+.playeight/
 jspm_packages/
 .sass-cache/
 .svelte-kit/
