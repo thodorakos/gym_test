@@ -3,13 +3,12 @@ services:
     name: gym-app
     env: docker
     dockerfilePath: ./Dockerfile
-    plan: free # optional
+    plan: free
     envVars:
       - fromGroup: gym-app-secrets
       - key: SERVER_PORT
         value: 8080
 
-  - type: postgres
-    name: gym-db
-    plan: free # optional
-    version: "13"
+databases:
+  - name: gym-db
+    plan: free
