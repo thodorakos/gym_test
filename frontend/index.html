@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Gym</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full z-10 top-0">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between">
+                <div class="flex space-x-4">
+                    <!-- Logo -->
+                    <div>
+                        <a href="/" class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
+                            <svg class="h-6 w-6 mr-1 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                            <span class="font-bold">Apex Gym</span>
+                        </a>
+                    </div>
+                    <!-- Primary Nav -->
+                    <div class="hidden md:flex items-center space-x-1">
+                        <a href="#features" class="py-5 px-3 text-gray-700 hover:text-gray-900">Features</a>
+                        <a href="/sessions.html" class="py-5 px-3 text-gray-700 hover:text-gray-900">Booking</a>
+                        <a href="/admin.html" id="admin-link" class="py-5 px-3 text-green-600 hover:text-green-700 font-semibold hidden">Admin Panel</a>
+                    </div>
+                </div>
+                <!-- Secondary Nav (dynamic) -->
+                <div id="auth-links" class="hidden md:flex items-center space-x-1"></div>
+                <!-- Mobile button -->
+                <div class="md:hidden flex items-center">
+                    <button class="mobile-menu-button">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu hidden md:hidden">
+            <a href="#features" class="block py-2 px-4 text-sm hover:bg-gray-200">Features</a>
+            <a href="/sessions.html" class="block py-2 px-4 text-sm hover:bg-gray-200">Booking</a>
+            <a href="/signin.html" class="block py-2 px-4 text-sm hover:bg-gray-200">Sign In</a>
+            <a href="/signup.html" class="block py-2 px-4 text-sm hover:bg-gray-200">Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section h-screen flex items-center justify-center">
+        <div class="text-center text-white">
+            <h1 class="text-5xl font-bold mb-4">Unleash Your Potential</h1>
+            <p class="text-xl mb-8">Join Apex Gym and start your fitness journey today.</p>
+            <a href="/signup.html" class="bg-green-500 text-white py-3 px-6 rounded-full text-lg hover:bg-green-600 transition duration-300">Get Started</a>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-12">Why Choose Us?</h2>
+            <div class="flex flex-wrap">
+                <div class="w-full md:w-1/3 px-4 mb-8">
+                    <div class="rounded-lg shadow-lg p-8 bg-white">
+                        <h3 class="text-2xl font-bold text-center mb-4">Expert Trainers</h3>
+                        <p class="text-gray-600 text-center">Our certified trainers are here to guide you every step of the way.</p>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/3 px-4 mb-8">
+                    <div class="rounded-lg shadow-lg p-8 bg-white">
+                        <h3 class="text-2xl font-bold text-center mb-4">Modern Equipment</h3>
+                        <p class="text-gray-600 text-center">We have a wide range of state-of-the-art fitness equipment.</p>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/3 px-4 mb-8">
+                    <div class="rounded-lg shadow-lg p-8 bg-white">
+                        <h3 class="text-2xl font-bold text-center mb-4">Flexible Booking</h3>
+                        <p class="text-gray-600 text-center">Book your sessions online at your convenience.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Apex Gym. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

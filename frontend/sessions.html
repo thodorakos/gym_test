@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Session - Apex Gym</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between">
+                <div class="flex space-x-4">
+                    <!-- Logo -->
+                    <div>
+                        <a href="/" class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
+                            <svg class="h-6 w-6 mr-1 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                            <span class="font-bold">Apex Gym</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- Secondary Nav -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="/" class="py-5 px-3 text-gray-700 hover:text-gray-900">Home</a>
+                    <a href="/admin.html" id="admin-link" class="py-5 px-3 text-green-600 hover:text-green-700 font-semibold hidden">Admin Panel</a>
+                    <a href="#" id="signout-btn" class="py-2 px-3 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition duration-300">Sign Out</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-6 py-20">
+        <h1 class="text-4xl font-bold text-center text-gray-800 mb-12">Book a Session</h1>
+        <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md p-8">
+            <form id="book-session-form">
+                <div class="mb-6">
+                    <label for="session-date" class="block text-gray-700 text-lg font-bold mb-2">Session Date & Time</label>
+                    <input type="datetime-local" id="session-date" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <div class="mb-6">
+                    <label for="session-type" class="block text-gray-700 text-lg font-bold mb-2">Session Type</label>
+                    <select id="session-type" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                        <option value="Yoga">Yoga</option>
+                        <option value="Cardio">Cardio</option>
+                        <option value="Weight-Lifting">Weight Lifting</option>
+                        <option value="CrossFit">CrossFit</option>
+                    </select>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full focus:outline-none focus:shadow-outline transition duration-300">
+                        Book Now
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <h2 class="text-3xl font-bold text-center text-gray-800 mt-20 mb-12">Your Upcoming Sessions</h2>
+        <div id="sessions-list" class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Sessions will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <script src="js/sessions.js"></script>
+</body>
+</html>
