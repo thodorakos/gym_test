@@ -1,0 +1,27 @@
+# Build stage
+FROM openjdk:17-jdk-slim as builder
+
+WORKDIR /app
+
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+
+RUN ./mvnw dependency:go-offline
+
+COPY src ./src
+
+RUN ./mvnw clean package -DskipTests
+
+# Runtime stage
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+COPY --from=builder /app/target/gym-*.jar app.jar
+
+EXPOSE 8080
+
+# Set production profile
+ENV SPRING_PROFILES_ACTIVE=production
+
+CMD ["java", "-jar", "app.jar"]
