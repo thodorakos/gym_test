@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: gym-app
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free # optional
+    envVars:
+      - fromGroup: gym-app-secrets
+      - key: SERVER_PORT
+        value: 8080
+
+  - type: psql
+    name: gym-db
+    plan: free # optional
+    version: "13"
