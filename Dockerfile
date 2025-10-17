@@ -17,13 +17,4 @@ WORKDIR /app
 COPY --from=backend /app/backend/target/*.jar app.jar
 COPY --from=frontend /app/frontend/dist /app/src/main/resources/static
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","app.jar"]COPY nginx.conf /etc/nginx/nginx.conf
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-# Install nginx
-RUN apt-get update && apt-get install -y nginx
-
-EXPOSE 80
-
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["java","-jar","app.jar"]
