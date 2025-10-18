@@ -17,7 +17,7 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
     if (response.ok) {
         const user = await response.json();
         sessionStorage.setItem('user', JSON.stringify(user));
-        window.location.href = '/';
+        window.location.href = 'index.html';
     } else {
         // Handle error
         alert('Sign up failed. Please try again.');
