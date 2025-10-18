@@ -15,7 +15,7 @@ document.getElementById('signin-form').addEventListener('submit', async (e) => {
     if (response.ok) {
         const user = await response.json();
         sessionStorage.setItem('user', JSON.stringify(user));
-        window.location.href = '/';
+        window.location.href = '/index.html';
     } else {
         // Handle error
         alert('Sign in failed. Please check your credentials.');
