@@ -6,18 +6,20 @@ RUN npm install
 COPY frontend/ ./
 RUN npm run build
 
-
-# Stage 2: Build backend
+# Stage 2: Build backend with frontend assets
 FROM maven:3.8.4-openjdk-17 AS backend
 WORKDIR /app
+# Copy backend source
 COPY backend/pom.xml ./
 COPY backend/src ./src
+# Copy built frontend from the previous stage
+COPY --from=frontend /app/frontend/dist ./src/main/resources/static
+# Build the backend. The JAR will now include the static files.
 RUN mvn clean install -DskipTests
 
 # Stage 3: Create final image
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY --from=backend /app/target/*.jar app.jar
-COPY --from=frontend /app/frontend/dist /app/static
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
