@@ -18,6 +18,6 @@ RUN mvn clean install -DskipTests
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY --from=backend /app/target/*.jar app.jar
-COPY --from=frontend /app/frontend/dist ./src/main/resources/static
+COPY --from=frontend /app/frontend/dist /app/static
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
