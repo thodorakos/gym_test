@@ -13,7 +13,7 @@ WORKDIR /app
 COPY backend/pom.xml ./
 COPY backend/src ./src
 # Copy built frontend from the previous stage
-COPY --from=frontend /app/frontend/dist ./src/main/resources/static
+COPY --from=frontend /app/frontend/public ./src/main/resources/static
 # Build the backend. The JAR will now include the static files.
 RUN mvn clean install -DskipTests
 
