@@ -3,6 +3,7 @@ package com.example.gym.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -13,9 +14,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
+    @NotBlank(message = "Username cannot be blank")
     private String username;
+    @NotBlank(message = "Password cannot be blank")
     private String password;
+    @NotBlank(message = "Email cannot be blank")
     private String email;
+    @NotBlank(message = "Phone cannot be blank")
     private String phone;
     private String role; // "USER" or "ADMIN"
 
