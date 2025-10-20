@@ -1,12 +1,14 @@
 {
-  "name": "frontend",
+  "name": "apex-gym-frontend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Modern responsive frontend for Apex Gym fitness management",
   "main": "index.js",
   "scripts": {
-    "build": "tailwindcss -i ./public/css/styles.css -o ./public/dist/styles.css --minify"
+    "build": "tailwindcss -i ./public/css/styles.css -o ./public/dist/styles.css --minify",
+    "watch": "tailwindcss -i ./public/css/styles.css -o ./public/dist/styles.css --watch",
+    "dev": "npm run watch"
   },
-  "keywords": [],
+  "keywords": ["gym", "fitness", "tailwind", "responsive"],
   "author": "",
   "license": "ISC",
   "devDependencies": {
