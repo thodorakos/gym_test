@@ -4,7 +4,7 @@ document.getElementById('signin-form').addEventListener('submit', async (e) => {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    const response = await fetch('/api/users/signin', {
+    const response = await fetch(`${API_BASE_URL}/api/users/signin`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

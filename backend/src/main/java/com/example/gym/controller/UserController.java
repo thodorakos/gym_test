@@ -15,15 +15,19 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<User> signup(@RequestBody User user) {
-        User newUser = userService.signup(user);
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+    public ResponseEntity<?> signup(@RequestBody User user) {
+        try {
+            User newUser = userService.signup(user);
+            return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Signup failed: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/signin")
     public ResponseEntity<User> signin(@RequestBody User user) {
-        User existingUser = userService.signin(user);
-        if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
+        User existingUser = userService.signin(user.getUsername());
+        if (existingUser != null && userService.checkPassword(user.getPassword(), existingUser.getPassword())) {
             return ResponseEntity.ok(existingUser);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
