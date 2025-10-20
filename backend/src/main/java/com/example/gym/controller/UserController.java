@@ -1,6 +1,8 @@
 package com.example.gym.controller;
 
 import com.example.gym.model.User;
+import com.example.gym.dto.SigninRequest;
+import com.example.gym.dto.SignupRequest;
 import com.example.gym.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +22,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@Valid @RequestBody User user, BindingResult bindingResult) {
+    public ResponseEntity<?> signup(@Valid @RequestBody SignupRequest signupRequest, BindingResult bindingResult) {
         try {
             if (bindingResult.hasErrors()) {
                 Map<String, Object> errorResponse = new HashMap<>();
@@ -29,8 +31,8 @@ public class UserController {
                 return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
             }
             
-            System.out.println("Processing signup for user: " + user.getUsername());
-            User newUser = userService.signup(user);
+            System.out.println("Processing signup for user: " + signupRequest.getUsername());
+            User newUser = userService.signup(signupRequest);
             System.out.println("User saved successfully with ID: " + newUser.getId());
             return new ResponseEntity<>(newUser, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -44,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> signin(@Valid @RequestBody User user, BindingResult bindingResult) {
+    public ResponseEntity<?> signin(@Valid @RequestBody SigninRequest signinRequest, BindingResult bindingResult) {
         try {
             if (bindingResult.hasErrors()) {
                 Map<String, Object> errorResponse = new HashMap<>();
@@ -53,10 +55,10 @@ public class UserController {
                 return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
             }
             
-            System.out.println("Processing signin for user: " + user.getUsername());
-            User existingUser = userService.signin(user.getUsername());
+            System.out.println("Processing signin for user: " + signinRequest.getUsername());
+            User existingUser = userService.signin(signinRequest.getUsername());
             
-            if (existingUser != null && userService.checkPassword(user.getPassword(), existingUser.getPassword())) {
+            if (existingUser != null && userService.checkPassword(signinRequest.getPassword(), existingUser.getPassword())) {
                 System.out.println("Signin successful for user: " + existingUser.getUsername());
                 return ResponseEntity.ok(existingUser);
             }
@@ -64,7 +66,7 @@ public class UserController {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("message", "Invalid username or password");
             errorResponse.put("error", "INVALID_CREDENTIALS");
-            System.out.println("Signin failed - invalid credentials for user: " + user.getUsername());
+            System.out.println("Signin failed - invalid credentials for user: " + signinRequest.getUsername());
             return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
             e.printStackTrace();

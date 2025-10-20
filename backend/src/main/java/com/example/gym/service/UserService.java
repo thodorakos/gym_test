@@ -1,6 +1,7 @@
 package com.example.gym.service;
 
 import com.example.gym.model.User;
+import com.example.gym.dto.SignupRequest;
 import com.example.gym.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,10 +16,14 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public User signup(User user) {
-        System.out.println("UserService.signup - Processing user: " + user.getUsername());
+    public User signup(SignupRequest signupRequest) {
+        System.out.println("UserService.signup - Processing user: " + signupRequest.getUsername());
+        User user = new User();
+        user.setUsername(signupRequest.getUsername());
+        user.setEmail(signupRequest.getEmail());
+        user.setPhone(signupRequest.getPhone());
         user.setRole("USER"); // Default role
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        String encodedPassword = passwordEncoder.encode(signupRequest.getPassword());
         user.setPassword(encodedPassword);
         System.out.println("UserService.signup - Password encoded, saving user...");
         User savedUser = userRepository.save(user);

@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadAllSessions() {
         try {
-            const response = await fetch('/api/sessions/all');
+            const response = await fetch(`${API_BASE_URL}/api/sessions/all`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

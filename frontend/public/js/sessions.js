@@ -28,36 +28,60 @@ document.addEventListener('DOMContentLoaded', () => {
         const sessionDate = document.getElementById('session-date').value;
         const sessionType = document.getElementById('session-type').value;
 
-        const response = await fetch('/api/sessions/book', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ sessionDate, sessionType, user: { id: user.id } })
-        });
+        console.log('Booking session with data:', { sessionDate, sessionType, userId: user.id });
 
-        if (response.ok) {
-            loadSessions();
-            bookSessionForm.reset();
-        } else {
-            console.error('Failed to book session');
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/sessions/book`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ sessionDate, sessionType, user: { id: user.id } })
+            });
+
+            console.log('Book session response status:', response.status);
+
+            if (response.ok) {
+                console.log('Session booked successfully');
+                loadSessions();
+                bookSessionForm.reset();
+            } else {
+                const errorData = await response.text();
+                console.error('Failed to book session:', response.status, errorData);
+                alert('Failed to book session: ' + errorData);
+            }
+        } catch (error) {
+            console.error('Error booking session:', error);
+            alert('Error booking session: ' + error.message);
         }
     });
 
     async function loadSessions() {
-        const response = await fetch(`/api/sessions/user/${user.id}`);
-        const sessions = await response.json();
+        try {
+            console.log('Loading sessions for user:', user.id);
+            const response = await fetch(`${API_BASE_URL}/api/sessions/user/${user.id}`);
+            
+            if (!response.ok) {
+                console.error('Failed to load sessions:', response.status);
+                return;
+            }
 
-        sessionsList.innerHTML = '';
-        sessions.forEach(session => {
-            const sessionElement = document.createElement('div');
-            sessionElement.className = 'bg-white p-6 rounded-lg shadow-md';
-            sessionElement.innerHTML = `
-                <h3 class="text-xl font-bold mb-2">${session.sessionType}</h3>
-                <p class="text-gray-600">${new Date(session.sessionDate).toLocaleString()}</p>
-            `;
-            sessionsList.appendChild(sessionElement);
-        });
+            const sessions = await response.json();
+            console.log('Sessions loaded:', sessions);
+
+            sessionsList.innerHTML = '';
+            sessions.forEach(session => {
+                const sessionElement = document.createElement('div');
+                sessionElement.className = 'bg-white p-6 rounded-lg shadow-md';
+                sessionElement.innerHTML = `
+                    <h3 class="text-xl font-bold mb-2">${session.sessionType}</h3>
+                    <p class="text-gray-600">${new Date(session.sessionDate).toLocaleString()}</p>
+                `;
+                sessionsList.appendChild(sessionElement);
+            });
+        } catch (error) {
+            console.error('Error loading sessions:', error);
+        }
     }
 
     loadSessions();
