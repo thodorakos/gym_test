@@ -16,13 +16,25 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public User signup(User user) {
+        System.out.println("UserService.signup - Processing user: " + user.getUsername());
         user.setRole("USER"); // Default role
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        System.out.println("UserService.signup - Password encoded, saving user...");
+        User savedUser = userRepository.save(user);
+        System.out.println("UserService.signup - User saved with ID: " + savedUser.getId());
+        return savedUser;
     }
 
     public User signin(String username) {
-        return userRepository.findByUsername(username);
+        System.out.println("UserService.signin - Looking up user: " + username);
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            System.out.println("UserService.signin - User found: " + user.getId());
+        } else {
+            System.out.println("UserService.signin - User not found");
+        }
+        return user;
     }
 
     public boolean checkPassword(String rawPassword, String encodedPassword) {

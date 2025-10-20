@@ -11,6 +11,7 @@ document.getElementById('signin-form').addEventListener('submit', async (e) => {
     }
 
     try {
+        console.log('Attempting signin with username:', username);
         const response = await fetch(`${API_BASE_URL}/api/users/signin`, {
             method: 'POST',
             headers: {
@@ -19,14 +20,31 @@ document.getElementById('signin-form').addEventListener('submit', async (e) => {
             body: JSON.stringify({ username, password })
         });
 
+        console.log('Signin response status:', response.status);
+
         if (response.ok) {
             const user = await response.json();
+            console.log('Signin successful, user:', user);
             sessionStorage.setItem('user', JSON.stringify(user));
             window.location.href = '/index.html';
         } else {
-            const errorData = await response.text();
-            alert('Sign in failed: ' + (errorData || 'Invalid credentials.'));
-            console.error('Sign in failed:', errorData);
+            const contentType = response.headers.get('content-type');
+            let errorMessage = 'Sign in failed. Invalid credentials.';
+            
+            if (contentType && contentType.includes('application/json')) {
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.message || JSON.stringify(errorData);
+                } catch (e) {
+                    const errorText = await response.text();
+                    errorMessage = errorText || errorMessage;
+                }
+            } else {
+                errorMessage = await response.text() || errorMessage;
+            }
+            
+            alert('Sign in failed: ' + errorMessage);
+            console.error('Sign in failed:', response.status, errorMessage);
         }
     } catch (error) {
         alert('Error: ' + error.message);

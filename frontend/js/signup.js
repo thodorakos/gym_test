@@ -13,6 +13,7 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
     }
 
     try {
+        console.log('Attempting signup with:', { username, email, phone });
         const response = await fetch(`${API_BASE_URL}/api/users/signup`, {
             method: 'POST',
             headers: {
@@ -21,14 +22,31 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
             body: JSON.stringify({ username, email, phone, password })
         });
 
+        console.log('Signup response status:', response.status);
+
         if (response.ok) {
             const user = await response.json();
+            console.log('Signup successful, user:', user);
             sessionStorage.setItem('user', JSON.stringify(user));
             window.location.href = '/index.html';
         } else {
-            const errorData = await response.json();
-            alert('Sign up failed: ' + (errorData.message || 'Please try again.'));
-            console.error('Sign up failed:', errorData);
+            const contentType = response.headers.get('content-type');
+            let errorMessage = 'Sign up failed. Please try again.';
+            
+            if (contentType && contentType.includes('application/json')) {
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.message || JSON.stringify(errorData);
+                } catch (e) {
+                    const errorText = await response.text();
+                    errorMessage = errorText || errorMessage;
+                }
+            } else {
+                errorMessage = await response.text() || errorMessage;
+            }
+            
+            alert('Sign up failed: ' + errorMessage);
+            console.error('Sign up failed:', response.status, errorMessage);
         }
     } catch (error) {
         alert('Error: ' + error.message);
