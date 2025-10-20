@@ -6,7 +6,7 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
     const phone = document.getElementById('phone').value;
     const password = document.getElementById('password').value;
 
-    const response = await fetch('/api/users/signup', {
+    const response = await fetch(`${API_BASE_URL}/api/users/signup`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
